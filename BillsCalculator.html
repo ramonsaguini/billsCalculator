@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bills Calculator</title>
+</head>
+
+
+<style>
+    body{
+    background-image: url("https://source.unsplash.com/1600x900/?landscape") ;
+    font:italic 20pt Arial;
+    }
+    header{
+    text-align: center;
+    }
+    section{ 
+    background-color: rgb(231, 231, 191);
+    border-radius: 10px; 
+    padding: 2px;
+    width: 500px; 
+    margin: auto;  
+    box-shadow: 5px 5px 10px rgb(255, 255, 255);
+    text-align: center;
+    
+    }
+
+    select#flist{
+    width: 150px;
+    }
+
+    footer{color: rgb(24, 206, 0);
+    text-align: center;  
+    }
+
+</style>
+
+
+<body>
+    <header>
+        <h1> Bills Calculator
+        </h1>
+
+    </header>
+
+    <section>
+        <div> <h> Add bills values and we will show you: 
+            <li>How many bills you have</li>
+            <li>Lowest value  </li>
+            <li>Highest value </li>
+            <li>Total value </li>
+            <li>Average</li>
+        </h> <br>
+                
+            <input type="number" placeholder="value" name="fnum" id="fnum">
+            <input type="button" value="Add" onclick="addIn()"> 
+            <br> <br>
+            <select name="flist" id="flist" size="6" ></select>
+
+            <input type="button" value="Ready!" onclick="finishing()">
+        </div>
+        <div id="res"></div>
+
+    </section>
+
+<footer>
+        <p>£$%^& Ramon's Copyright £$%^&</p>
+</footer>
+</body>
+
+
+<script>
+    let num = document.querySelector('input#fnum')    
+    let list = document.querySelector('select#flist')
+    let res = document.querySelector('div#res')
+    let values = []
+    
+    function isNumero(n){
+        if(Number(n) >= 1 ) {
+         return true
+        } else { 
+        return false
+        }
+    }
+
+    function inLista(n, l) {
+        if (l.indexOf(Number(n)) != -1) {
+        return true
+        } else { 
+        return false
+        }
+    }
+
+    function addIn(){
+        if(isNumero(num.value) && !inLista(num.value, values)) { 
+        values.push(Number(num.value))
+        let item = document.createElement(`option`)
+        item.text = `${num.value} added`
+        list.appendChild(item)
+        res.innerHTML = ``
+        } else {window.alert('invalid value/ already added')
+        }
+    }
+    
+    function finishing(){
+        if (values.length == 0){
+            window.alert(`add value please!!`)
+        } else {
+        let tot = values.length 
+        let highest = values[0]
+        let lower = values[0]
+        let add = 0
+        let average = 0
+        for(let pos in values){
+            add += values[pos]
+            if (values[pos] > highest)
+            highest = values[pos]
+            if (values[pos] < lower) 
+            lower = values[pos]
+        }
+
+        average = add / tot
+        res.innerHTML = ``
+        res.innerHTML += `<p> We have <strong> ${tot}</strong> bills registered in total </P> ` 
+        res.innerHTML += `<p>Lowest value <strong> £${lower}</strong> </P> `
+        res.innerHTML += `<p>Highest value <strong>£${highest}</strong> </p> `
+        res.innerHTML += `<p> Total value <strong>£${add}</strong> </P>`
+        res.innerHTML += `<p>the average of all bills <strong>£${average}</strong> </P>`
+        }
+    }
+    
+</script>
+
+</html>
